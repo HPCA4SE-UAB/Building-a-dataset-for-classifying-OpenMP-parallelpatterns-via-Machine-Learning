@@ -51,6 +51,12 @@ The databases were compressed in 7z format using 7za, it may be necessary to use
 	
 Databases were normalized dividing all the hardware counters in the each row by the value of PAPI_REF_CYC in each row.
 
+
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3865286.svg)](https://doi.org/10.5281/zenodo.3865286)
+
+
+
 ## LICENSE (GPL):
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, version 3.
