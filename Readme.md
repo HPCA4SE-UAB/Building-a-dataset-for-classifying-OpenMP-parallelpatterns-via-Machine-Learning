@@ -7,6 +7,9 @@ In order to run the examples you need to install:
 
 [`Jupyter`](https://jupyter.org/)
 
+
+[`MATE`](https://github.com/HPCA4SE-UAB/MATE)
+
 ## File description
 
 * Correlation analysis.ipynb :
@@ -17,7 +20,24 @@ In order to run the examples you need to install:
 
 Sometimes github fails opening jupyter notebooks, if this problem appears, use nbviewer: https://nbviewer.jupyter.org/
 
-## Database descriptopn
+## Database creation
+
+In order to create the database, we have used MATE to obtain the hardware performance counter values. It is also possible to use PTF, TAU2, or use PAPI directly to measure them.
+
+We provide scripts for our case using MATE.
+
+To execute and obtain the performance data, scripts polybench/jobs/job-poly-AC.sub and polybench/jobs/job-poly-Analyzer.sub are provided. They should be modified according to the slurm queue and hardware used.
+
+Also, the .ini files should be modified according to MATE's installation paths and log's paths.
+
+To generate the database for correlation, the fuse_results.sh script under polybench/jobs should be used.
+
+Train_ANN and test_ANN datasets are generated using correlation analysis as explained in the paper.
+
+
+
+
+## Database description
 
 The databases were compressed in 7z format using 7za, it may be necessary to use git lfs to download the files instead of git due to file size.
 
@@ -28,6 +48,8 @@ The databases were compressed in 7z format using 7za, it may be necessary to use
 * test_ANN.7z:
     Includes the dataset used in "Training ANN.ipynb". The columns in this dataset are: label and one column for each hardware performance counter.
 
+	
+Databases were normalized dividing all the hardware counters in the each row by the value of PAPI_REF_CYC in each row.
 
 ## LICENSE (GPL):
 

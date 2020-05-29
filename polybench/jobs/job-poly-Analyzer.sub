@@ -1,0 +1,126 @@
+#!/bin/bash -l
+#SBATCH --job-name="Poly-An"
+#SBATCH -w aomaster
+#SBATCH --time=200:00:00
+#SBATCH --partition=research.q 
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --output=/home/caos/jalcaraz/polybench-c-4.2.1-beta-OPENMP/jobs/An-OUT-%j.log
+#SBATCH --error=/home/caos/jalcaraz/polybench-c-4.2.1-beta-OPENMP/jobs/An-ERR-%j.log
+
+
+
+
+
+exec_mate_bench_An()
+{
+	CURRENT_DIR=`pwd`; 
+	bench=`basename $CURRENT_DIR`; 
+	fuser -k 9900/tcp
+	fuser -k 8800/tcp
+	export OMP_NUM_THREADS=1
+	#Collect data using Tunlet.ini from 1 to 5
+	for i in 1 2 3 4 5
+	do
+		cp Tunlet${i}.ini Tunlet.ini
+		#In our case, the machine has 12 cores, this should be changed to the number of cores in the machine
+		for n_threads in {1..12}
+		do
+			#Select number of threads
+			export OMP_NUM_THREADS=${n_threads}
+			#Free ports in case they failed to be freed
+			fuser -k 8800/tcp
+			fuser -k 9900/tcp
+			echo "-------------Number of threads ${OMP_NUM_THREADS} Tunlet${i}.ini ${1} ${bench} ${CURRENT_DIR}" >&2
+			echo "-------------Number of threads ${OMP_NUM_THREADS} Tunlet${i}.ini ${1} ${bench} ${CURRENT_DIR}"
+			#Execute MATE's analyzer
+			Analyzer -config Analyzer.ini ./${bench}
+			
+			#Modify csv name with the compiler optimization flag and size
+			mv data.csv data-O2-unk.csv
+			#Insert execution data into csv
+			python3 /home/caos/jalcaraz/polybench-c-4.2.1-beta-OPENMP/jobs/environment.py
+			#Remove former csv
+			rm data-*
+			#Move modified csv to the correspoding directory [affinity]/Tunlet[num]
+			mv *.csv ${1}/Tunlet${i}/
+		done
+	done
+}
+
+
+#Remove previous data and create directories to store new performance data
+initialize_directories()
+{
+  rm *.csv
+  make clean
+  make
+  rm -r close
+  rm -r spread
+	mkdir close
+	mkdir spread
+	for i in 1 2 3 4 5
+	do
+		mkdir close/Tunlet${i}
+		mkdir spread/Tunlet${i}		
+	done
+}
+
+#OMP_PLACES should be modified for current hardware in use
+#Execution for close affinity
+exec_threads_close()
+{
+	export OMP_PLACES='{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11}'
+	export OMP_PROC_BIND=close
+	exec_mate_bench_An close
+}
+
+#OMP_PLACES should be modified for current hardware in use
+#Execution for round robin affinity
+exec_threads_spread()
+{
+	export OMP_PLACES='{0},{6},{1},{7},{2},{8},{3},{9},{4},{10},{5},{11}'
+	export OMP_PROC_BIND=close
+	exec_mate_bench_An spread
+}
+
+#Execute all the benchmarks in the subdirectories for both affinities
+explore_dirs() 
+{
+  CURRENT_DIR_E=`pwd`; 
+	for dir in ${CURRENT_DIR_E}/*
+	do
+	  cd $dir
+	  initialize_directories;
+	  exec_threads_close;
+	  exec_threads_spread;
+    cd ..
+	done
+}
+
+#Load .bashrc just in case
+cd
+source .bashrc
+
+#Move to the directory of the blas benchmarks
+cd /home/caos/jalcaraz/polybench-c-4.2.1-beta-OPENMP/
+cd linear-algebra
+	cd blas
+		explore_dirs
+	cd ..
+cd ..
+
+#Move to the directory of the kernels benchmarks
+cd /home/caos/jalcaraz/polybench-c-4.2.1-beta-OPENMP/
+cd linear-algebra	
+	cd kernels
+		explore_dirs
+	cd ..
+cd ..
+
+#Move to the directory of the stencils benchmarks
+cd /home/caos/jalcaraz/polybench-c-4.2.1-beta-OPENMP/
+cd stencils
+	explore_dirs
+cd .. 

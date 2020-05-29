@@ -1,0 +1,102 @@
+#!/bin/bash -l
+#SBATCH --job-name="Poly-AC"
+#SBATCH -w aoclsd
+#SBATCH --exclusive
+#SBATCH --time=200:00:00
+#SBATCH --partition=research.q 
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=24
+#SBATCH --output=/home/caos/jalcaraz/polybench-c-4.2.1-beta-OPENMP/jobs/AC-OUT-%j.log
+#SBATCH --error=/home/caos/jalcaraz/polybench-c-4.2.1-beta-OPENMP/jobs/AC-ERR-%j.log
+
+
+
+
+
+exec_mate_bench()
+{
+	CURRENT_DIR=`pwd`; 
+	bench=`basename $CURRENT_DIR`; 
+	fuser -k 9900/tcp
+	fuser -k 8800/tcp
+	export OMP_NUM_THREADS=1
+	#Collect data using Tunlet.ini from 1 to 5
+	for i in 1 2 3 4 5
+	do
+		#In our case, the machine has 12 cores, this should be changed to the number of cores in the machine
+		for j in {1..12}
+		do
+			#Select number of threads
+			export OMP_NUM_THREADS=$j
+			#Free ports in case they failed to be freed
+			fuser -k 8800/tcp
+			fuser -k 9900/tcp
+			echo "-------------Number of threads $j ${OMP_PLACES} Tunlet ${i} ${bench} ${CURRENT_DIR}" >&2
+			echo "-------------Number of threads $j ${OMP_PLACES} Tunlet ${i} ${bench} ${CURRENT_DIR}"
+			#Execute MATE's AC
+			mpirun -np 1 --bind-to none AC ./${bench}
+		done
+	done
+}
+
+#OMP_PLACES should be modified for current hardware in use
+#Execution for close affinity
+exec_threads_close()
+{
+	export OMP_PLACES='{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11}'
+	export OMP_PROC_BIND=close
+	exec_mate_bench 
+}
+
+#OMP_PLACES should be modified for current hardware in use
+#Execution for round robin affinity
+exec_threads_spread()
+{
+	export OMP_PLACES='{0},{6},{1},{7},{2},{8},{3},{9},{4},{10},{5},{11}'
+	export OMP_PROC_BIND=close
+	exec_mate_bench 
+}
+
+#Execute all the benchmarks in the subdirectories for both affinities
+explore_dirs() 
+{
+  CURRENT_DIR_E=`pwd`; 
+	for dir in ${CURRENT_DIR_E}/*
+	do
+	  cd $dir
+	  exec_threads_close;
+	  exec_threads_spread;
+    cd ..
+	done
+}
+
+#Load .bashrc just in case
+cd
+source .bashrc
+
+#Small sleep, Analyzer should start first
+sleep 20
+
+#Move to the directory of the blas benchmarks
+cd /home/caos/jalcaraz/polybench-c-4.2.1-beta-OPENMP/
+cd linear-algebra
+	cd blas
+		explore_dirs
+	cd ..
+cd ..
+
+#Move to the directory of the kernels benchmarks
+cd /home/caos/jalcaraz/polybench-c-4.2.1-beta-OPENMP/
+cd linear-algebra	
+	cd kernels
+		explore_dirs
+	cd ..
+cd ..
+
+#Move to the directory of the stencils benchmarks
+cd /home/caos/jalcaraz/polybench-c-4.2.1-beta-OPENMP/
+cd stencils
+	explore_dirs
+cd .. 
+

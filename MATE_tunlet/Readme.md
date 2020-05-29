@@ -1,0 +1,1 @@
+Files should be copied into directory src/Analyzer inside MATE 

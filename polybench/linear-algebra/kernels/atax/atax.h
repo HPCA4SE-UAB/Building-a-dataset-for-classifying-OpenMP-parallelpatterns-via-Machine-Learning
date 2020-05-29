@@ -7,14 +7,13 @@
  *
  * Web address: http://polybench.sourceforge.net
  */
-#define DATA_TYPE_IS_FLOAT
-#define EXTRALARGE_DATASET  
+#define DATA_TYPE_IS_FLOAT 
 #ifndef _ATAX_H
 # define _ATAX_H
 
 /* Default to LARGE_DATASET. */
 # if !defined(MINI_DATASET) && !defined(SMALL_DATASET) && !defined(MEDIUM_DATASET) && !defined(LARGE_DATASET) && !defined(EXTRALARGE_DATASET)
-#  define LARGE_DATASET
+#  define EXTRALARGE_DATASET2
 # endif
 
 # if !defined(M) && !defined(N)
@@ -39,9 +38,9 @@
 #   define N 2100
 #  endif
 
-#  ifdef EXTRALARGE_DATASET
-#   define M 1800
-#   define N 2200
+#  ifdef EXTRALARGE_DATASET2
+#   define M 3600
+#   define N 4400
 #  endif
 
 
