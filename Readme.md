@@ -42,7 +42,7 @@ In order to run the examples you need to install:
     │   └───jacobi-2d
     └───utilities #Polybench common files for all benchmarks, read Polybench documentation
  ```
-## File description
+## Jupyter's notebooks description
 
 * Correlation analysis.ipynb :
 	Script in jupyter notebook which uses Python to calculate the matrix correlation between different kernels and the patterns included in the pattern collection. This example compares Polybench kernels.
@@ -52,6 +52,17 @@ In order to run the examples you need to install:
 
 Sometimes github fails opening jupyter notebooks, if this problem appears, use nbviewer: https://nbviewer.jupyter.org/
 
+## Instructions
+
+To reproduce the results in another hardware, these are the steps that the user should follow:
+
+1. Install PAPI.
+
+2. Install MATE.
+
+3.
+
+
 ## Database creation
 
 In order to create the database, we have used MATE to obtain the hardware performance counter values. It is also possible to use PTF, TAU2, or use PAPI directly to measure them.
@@ -60,13 +71,11 @@ We provide scripts for our case using MATE.
 
 To execute and obtain the performance data, scripts polybench/jobs/job-poly-AC.sub and polybench/jobs/job-poly-Analyzer.sub are provided. They should be modified according to the slurm queue and hardware used.
 
-Also, the .ini files should be modified according to MATE's installation paths and log's paths.
+Also, the .ini files found in each benchmark subdirectory should be modified according to MATE's installation paths and log's paths.
 
 To generate the database for correlation, the fuse_results.sh script under polybench/jobs should be used.
 
 Train_ANN and test_ANN datasets are generated using correlation analysis as explained in the paper.
-
-
 
 
 ## Database description
