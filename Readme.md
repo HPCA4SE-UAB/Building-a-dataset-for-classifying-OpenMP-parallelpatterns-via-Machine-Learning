@@ -83,11 +83,11 @@ To reproduce the results in another hardware, these are the steps that the user 
 10. Traning ANN.ipynb can be used now to train an ANN to classify kernels.
 
 
-[ ]Important:
-	- If additional fields were generated or added to the database, they should be removed to work without modifying the jupyter notebook provided.
+#Important:
+	# If additional fields were generated or added to the database, they should be removed to work without modifying the jupyter notebook provided.
 		Fields can be checked with name_dataset.info()
 		The fields can be removed with: del name_dataset['name_field'] after pd.read_csv
-	- The process of data normalization can be seen in Training ANN.ipynb, under Import validation dataset in the second executable cell.
+	# The process of data normalization can be seen in Training ANN.ipynb, under Import validation dataset in the second executable cell.
 
 
 
