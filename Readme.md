@@ -62,9 +62,33 @@ To reproduce the results in another hardware, these are the steps that the user 
 
 	- Copy Tunlets files into MATE's src/Analyzer
 
-	- Install MATE. Refer to: https://github.com/HPCA4SE-UAB/MATE/tree/master/docs
+	- Install MATE's dependencies and MATE. Refer to: https://github.com/HPCA4SE-UAB/MATE/tree/master/docs
 
-3.
+3. Modify all .ini files in benchmarks subdirectories with the paths chosen in MATE's installation.
+
+4. Modify SLURM's scripts inside polybench/jobs directory to fit queue's and hardware's parameters. Also, POLY_PATH should be modified with the full path of the polybench directory. 
+
+5. Send jobs to queue with  sbatch job-poly-AC.sub; sbatch job-poly-Analyzer.sub;
+
+6. If the jobs ended without errors, modify the paths in polybench/jobs/fuse_results.sh (variable POLY_PATH).
+
+7. Execute fuse_results.sh
+
+8. When it ends, a csv fill all the execution data should have been generated.
+
+9. Use Correlation analysis.ipynb to find correlations between the different kernels and remove the highly correlated ones.
+
+	- Noncorrelated kernels should be saved in train.csv and removed kernels in test.csv.
+
+10. Traning ANN.ipynb can be used now to train an ANN to classify kernels.
+
+Important:
+	- If additional fields were generated or added to the database, they should be removed to work without modifying the jupyter notebook provided.
+		Fields can be checked with name_dataset.info()
+		The fields can be removed with: del name_dataset['name_field'] after pd.read_csv
+	
+	- The process of data normalization can be seen in Training ANN.ipynb, under Import validation dataset in the second executable cell.
+
 
 
 ## Database creation

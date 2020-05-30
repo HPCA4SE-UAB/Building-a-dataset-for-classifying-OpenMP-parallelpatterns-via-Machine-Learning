@@ -2,8 +2,9 @@
 # exit when any command fails
 set -e
 
-SCRIPT_DIR=/home/caos/jalcaraz/polybench-c-4.2.1-beta-OPENMP/jobs/
-RESULTS_DIR=/home/caos/jalcaraz/polybench-c-4.2.1-beta-OPENMP/jobs/results
+POLY_PATH=$HOME/polybench
+SCRIPT_DIR=$POLY_PATH/jobs/
+RESULTS_DIR=$POLY_PATH/jobs/results
 
 #Join close and round robin(spread) affinity's files into one
 fuse_close_spread()
@@ -83,7 +84,7 @@ explore_dirs()
 
 
 #Move to the main directory of the benchmarks
-cd /home/caos/jalcaraz/polybench-c-4.2.1-beta-OPENMP/
+cd $POLY_PATH
 
 ###{ 
 

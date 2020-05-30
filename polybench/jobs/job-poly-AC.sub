@@ -7,10 +7,11 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=24
-#SBATCH --output=/home/caos/jalcaraz/polybench-c-4.2.1-beta-OPENMP/jobs/AC-OUT-%j.log
-#SBATCH --error=/home/caos/jalcaraz/polybench-c-4.2.1-beta-OPENMP/jobs/AC-ERR-%j.log
+#SBATCH --output=$POLY_PATHjobs/AC-OUT-%j.log
+#SBATCH --error=$POLY_PATHjobs/AC-ERR-%j.log
 
 
+export POLY_PATH=$HOME/polybench
 
 
 
@@ -79,7 +80,7 @@ source .bashrc
 sleep 20
 
 #Move to the directory of the blas benchmarks
-cd /home/caos/jalcaraz/polybench-c-4.2.1-beta-OPENMP/
+cd $POLY_PATH
 cd linear-algebra
 	cd blas
 		explore_dirs
@@ -87,7 +88,7 @@ cd linear-algebra
 cd ..
 
 #Move to the directory of the kernels benchmarks
-cd /home/caos/jalcaraz/polybench-c-4.2.1-beta-OPENMP/
+cd $POLY_PATH
 cd linear-algebra	
 	cd kernels
 		explore_dirs
@@ -95,7 +96,7 @@ cd linear-algebra
 cd ..
 
 #Move to the directory of the stencils benchmarks
-cd /home/caos/jalcaraz/polybench-c-4.2.1-beta-OPENMP/
+cd $POLY_PATH
 cd stencils
 	explore_dirs
 cd .. 

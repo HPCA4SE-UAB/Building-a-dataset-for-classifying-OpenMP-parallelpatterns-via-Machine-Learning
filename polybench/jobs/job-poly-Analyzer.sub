@@ -6,11 +6,11 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
-#SBATCH --output=/home/caos/jalcaraz/polybench-c-4.2.1-beta-OPENMP/jobs/An-OUT-%j.log
-#SBATCH --error=/home/caos/jalcaraz/polybench-c-4.2.1-beta-OPENMP/jobs/An-ERR-%j.log
+#SBATCH --output=$POLY_PATH/jobs/An-OUT-%j.log
+#SBATCH --error=$POLY_PATH/jobs/An-ERR-%j.log
 
 
-
+export POLY_PATH=$HOME/polybench
 
 
 exec_mate_bench_An()
@@ -40,7 +40,7 @@ exec_mate_bench_An()
 			#Modify csv name with the compiler optimization flag and size
 			mv data.csv data-O2-unk.csv
 			#Insert execution data into csv
-			python3 /home/caos/jalcaraz/polybench-c-4.2.1-beta-OPENMP/jobs/environment.py
+			python3 $POLY_PATH/jobs/environment.py
 			#Remove former csv
 			rm data-*
 			#Move modified csv to the correspoding directory [affinity]/Tunlet[num]
@@ -104,7 +104,7 @@ cd
 source .bashrc
 
 #Move to the directory of the blas benchmarks
-cd /home/caos/jalcaraz/polybench-c-4.2.1-beta-OPENMP/
+cd $POLY_PATH/
 cd linear-algebra
 	cd blas
 		explore_dirs
@@ -112,7 +112,7 @@ cd linear-algebra
 cd ..
 
 #Move to the directory of the kernels benchmarks
-cd /home/caos/jalcaraz/polybench-c-4.2.1-beta-OPENMP/
+cd $POLY_PATH/
 cd linear-algebra	
 	cd kernels
 		explore_dirs
@@ -120,7 +120,7 @@ cd linear-algebra
 cd ..
 
 #Move to the directory of the stencils benchmarks
-cd /home/caos/jalcaraz/polybench-c-4.2.1-beta-OPENMP/
+cd $POLY_PATH/
 cd stencils
 	explore_dirs
 cd .. 
