@@ -13,11 +13,13 @@ In order to run the examples you need to install:
 ## Directory structure
 
  ```bash
-├───MATE_tunlet
-└───polybench
-    ├───jobs
-    │   └───results
-    ├───linear-algebra
+├───MATE_tunlet #Tunlet for MATE, should be copied into MATE's src folder before compiling: [MATE_dir]/src/Analyzer
+└───polybench #Modified Polybench benchmark with OpenMP parallel versions. Documentation about polybench can be found inside polybench.pdf
+	│ 		  # and original repository https://web.cse.ohio-state.edu/~pouchet.2/software/polybench/
+    ├───jobs  # Includes scripts to execute MATE using SLURM and scripts to read intermediary results to produce database
+	│   │	  # Absolute paths in scripts should be modified
+    │   └───results #The final database is generated inside this folder
+    ├───linear-algebra #Linear-algebra kernels, read Polybench documentation
     │   ├───blas
     │   │   ├───gemm
     │   │   ├───gemver
@@ -26,19 +28,19 @@ In order to run the examples you need to install:
     │   │   ├───syr2k
     │   │   ├───syrk
     │   │   └───trmm
-    │   └───kernels
+    │   └───kernels 
     │       ├───2mm
     │       ├───3mm
     │       ├───atax
     │       ├───doitgen
     │       └───mvt
-    ├───stencils
+    ├───stencils #stencils kernels, read Polybench documentation
     │   ├───adi
     │   ├───fdtd-2d
     │   ├───heat-3d
     │   ├───jacobi-1d
     │   └───jacobi-2d
-    └───utilities
+    └───utilities #Polybench common files for all benchmarks, read Polybench documentation
  ```
 ## File description
 
