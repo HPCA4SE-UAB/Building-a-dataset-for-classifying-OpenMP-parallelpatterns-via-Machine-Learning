@@ -56,9 +56,13 @@ Sometimes github fails opening jupyter notebooks, if this problem appears, use n
 
 To reproduce the results in another hardware, these are the steps that the user should follow:
 
-1. Install PAPI.
+1. Install PAPI. Refer to: http://icl.utk.edu/papi/software/
 
-2. Install MATE.
+2. Download MATE. Refer to: https://github.com/HPCA4SE-UAB/MATE
+
+2.a. Copy Tunlets files into MATE's src/Analyzer
+
+2.b Install MATE. Refer to: https://github.com/HPCA4SE-UAB/MATE/tree/master/docs
 
 3.
 
