@@ -83,7 +83,7 @@ To reproduce the results in another hardware, these are the steps that the user 
 10. Traning ANN.ipynb can be used now to train an ANN to classify kernels.
 
 
-#Important:
+	Precaution:
 
 	1. If additional fields were generated or added to the database, they should be removed to work without modifying the jupyter notebook provided.
 	
