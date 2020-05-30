@@ -60,9 +60,9 @@ To reproduce the results in another hardware, these are the steps that the user 
 
 2. Download MATE. Refer to: https://github.com/HPCA4SE-UAB/MATE
 
-2.a. Copy Tunlets files into MATE's src/Analyzer
+	- Copy Tunlets files into MATE's src/Analyzer
 
-2.b Install MATE. Refer to: https://github.com/HPCA4SE-UAB/MATE/tree/master/docs
+	- Install MATE. Refer to: https://github.com/HPCA4SE-UAB/MATE/tree/master/docs
 
 3.
 
