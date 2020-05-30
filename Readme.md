@@ -10,6 +10,36 @@ In order to run the examples you need to install:
 
 [`MATE`](https://github.com/HPCA4SE-UAB/MATE)
 
+## Directory structure
+
+ ```bash
+├───MATE_tunlet
+└───polybench
+    ├───jobs
+    │   └───results
+    ├───linear-algebra
+    │   ├───blas
+    │   │   ├───gemm
+    │   │   ├───gemver
+    │   │   ├───gesummv
+    │   │   ├───symm
+    │   │   ├───syr2k
+    │   │   ├───syrk
+    │   │   └───trmm
+    │   └───kernels
+    │       ├───2mm
+    │       ├───3mm
+    │       ├───atax
+    │       ├───doitgen
+    │       └───mvt
+    ├───stencils
+    │   ├───adi
+    │   ├───fdtd-2d
+    │   ├───heat-3d
+    │   ├───jacobi-1d
+    │   └───jacobi-2d
+    └───utilities
+ ```
 ## File description
 
 * Correlation analysis.ipynb :
