@@ -45,10 +45,12 @@ In order to run the examples you need to install:
 ## Jupyter's notebooks description
 
 * Correlation analysis.ipynb :
-	Script in jupyter notebook which uses Python to calculate the matrix correlation between different kernels and the patterns included in the pattern collection. This example compares Polybench kernels.
+	Script in jupyter notebook which uses Python to calculate the matrix correlation between different kernels and the patterns included in the pattern collection. This example compares Polybench kernels. It takes as input the dataset_kernerls_corr.csv which can be found inside dataset_kernerls_corr.7z
 
 * Training ANN.ipynb:
-	Script to train the ANN described in our work.
+	Script to train and verify the ANN described in our work. It takes as inputs train_ANN.csv and test_ANN.csv which can be found inside the .7z files with the same name.
+	
+To decompress the .7z, 7zip is needed. [`7zip`](https://www.7-zip.org/)
 
 Sometimes github fails opening jupyter notebooks, if this problem appears, use nbviewer: https://nbviewer.jupyter.org/
 
